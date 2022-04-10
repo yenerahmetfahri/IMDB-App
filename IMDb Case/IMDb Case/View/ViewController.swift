@@ -62,7 +62,6 @@ extension ViewController {
     }
     
     private func initService(page: Int?) {
-        print(page)
         movieService.getMovies(moviePath: MoviePath.Upcoming, page: page) { [weak self] response in
             if page == nil {
                 self?.self.tableViewMovieArray.removeAll()
