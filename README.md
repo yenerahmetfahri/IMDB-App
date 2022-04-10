@@ -24,6 +24,7 @@ TMDB API ile geliştirilmiştir.
 # Kullanılan Kütüphaneler
 - Alamofire
 - KingFisher
+- Kütüphaneler pod kullanılarak değil, Swift Package Manager kullanılarak eklenmiştir.
 
 # İletişim
 
