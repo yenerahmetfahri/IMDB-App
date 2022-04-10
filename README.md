@@ -20,6 +20,7 @@ TMDB API ile geliştirilmiştir.
 - Toolbar yapmadım, navigation item kullandım.
 - PageControl kullanmadım.
 - ImageSlider ı kütüphaneyle yaptım önce, sonra belki kendim yapmam daha doğrudur diye geri çevirdim, o arada pageControl gitmiş :)
+- Test yazmadım.
 
 # Kullanılan Kütüphaneler
 - Alamofire
