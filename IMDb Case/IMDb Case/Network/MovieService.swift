@@ -8,23 +8,17 @@
 import Alamofire
 
 protocol GetMovieProtocol {
-    func getMovies(moviePath: MoviePath, onSuccess: @escaping (MoviesModel) -> Void, onFailure: @escaping (String?) -> Void)
-}
-
-enum MoviePath: String {
-    case NowPlaying = "/now_playing"
-    case Upcoming = "/upcoming"
-}
-
-extension MoviePath {
-    func withBaseUrl() -> String {
-        return "https://api.themoviedb.org/3/movie\(self.rawValue)?api_key=3be0e48fe01d3b9d6da1a938c12dc748"
-    }
+    func getMovies(moviePath: MoviePath, page: Int?, onSuccess: @escaping (MoviesModel) -> Void, onFailure: @escaping (String?) -> Void)
+    func getMovieDetail(movieId: String, onSuccess: @escaping (MovieDetailModel) -> Void, onFailure: @escaping (String?) -> Void)
 }
 
 struct MovieService: GetMovieProtocol {
-    func getMovies(moviePath: MoviePath, onSuccess: @escaping (MoviesModel) -> Void, onFailure: @escaping (String?) -> Void) {
-        AF.request(moviePath.withBaseUrl(), method: .get).validate().responseDecodable(of: MoviesModel.self) {
+    func getMovies(moviePath: MoviePath, page: Int?, onSuccess: @escaping (MoviesModel) -> Void, onFailure: @escaping (String?) -> Void) {
+        var url = moviePath.withBaseUrl()
+        if let page = page {
+            url = url + "&page=\(page)"
+        }
+        AF.request(url, method: .get).validate().responseDecodable(of: MoviesModel.self) {
             (response) in
             guard let data = response.value else {
                 onFailure(response.debugDescription)
@@ -34,4 +28,15 @@ struct MovieService: GetMovieProtocol {
         }
     }
     
+    func getMovieDetail(movieId: String, onSuccess: @escaping (MovieDetailModel) -> Void, onFailure: @escaping (String?) -> Void) {
+        let url = movieId.getMovieDetailURL()
+        AF.request(url, method: .get).validate().responseDecodable(of: MovieDetailModel.self) {
+            (response) in
+            guard let data = response.value else {
+                onFailure(response.debugDescription)
+                return
+            }
+            onSuccess(data)
+        }
+    }
 }

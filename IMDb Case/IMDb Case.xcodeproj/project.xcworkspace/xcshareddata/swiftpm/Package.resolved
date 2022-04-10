@@ -5,8 +5,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Alamofire/Alamofire.git",
       "state" : {
-        "revision" : "f82c23a8a7ef8dc1a49a8bfc6a96883e79121864",
-        "version" : "5.5.0"
+        "branch" : "master",
+        "revision" : "dcb6567ae2734c33e4620be26184ab9f3515edc5"
+      }
+    },
+    {
+      "identity" : "kingfisher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onevcat/Kingfisher.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "a78e152f001201b187d60b2538fca01842c033b2"
       }
     }
   ],

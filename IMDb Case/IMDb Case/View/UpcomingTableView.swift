@@ -6,33 +6,33 @@
 //
 
 import UIKit
+import Kingfisher
 
 protocol UpcomingTableViewProtocol {
     func update(items: [Movie])
 }
 
-protocol UpcomingTableViewOutput: class {
-    func onSelected(movie: Movie)
-}
-
-final class UpcomingTableView: NSObject, UITableViewDelegate, UITableViewDataSource {
+final class UpcomingTableView: NSObject, UITableViewDataSource {
+    
     private lazy var items: [Movie] = []
-
-    weak var delegate: UpcomingTableViewOutput?
+    
+    var currentPage : Int = 0
+    var isLoadingList : Bool = false
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = items[indexPath.row].title
-        cell.detailTextLabel?.text = items[indexPath.row].originalTitle
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.onSelected(movie: items[indexPath.row])
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "UpcomingTableViewCell") as? UpcomingTableViewCell {
+            cell.movieTitle.text = items[indexPath.row].title
+            cell.movieDesc.text = items[indexPath.row].overview
+            cell.movieDate.text = items[indexPath.row].releaseDate?.getDateParseFormat()
+            cell.movieImage.kf.setImage(with: items[indexPath.row].posterPath?.getMiniPosterUrl())
+            return cell
+        }
+        
+        return UITableViewCell()
     }
 }
 
